@@ -91,3 +91,10 @@ export function dynamicDetail(id) {
       url: `/food/djpd/record/dynamic/detail?recordId=${id}`,
   })
 }
+
+export function subRecordList(id) {
+  return http({
+      method: 'get',
+      url: `/food/djpd/entity/recordList?entityId=${id}`,
+  })
+}

@@ -42,12 +42,12 @@
                                     <span>{{initRepatrol.entityType=='CFDARESTAURANT'?'小经营店（餐饮）':'餐饮主体'}}</span>
                                 </el-form-item>
                                 <el-form-item label="主体业态:">
-                                    <span>{{initRepatrol.subType ? initRepatrol.subType  : '暂无'}}</span>
+                                    <span>{{initRepatrol.subTypeStr ? initRepatrol.subTypeStr  : '暂无'}}</span>
                                 </el-form-item>
                             </div>
                             <div class="row">
                                 <el-form-item label="监管类型:">
-                                    <span>{{initRepatrol.superviseType ? initRepatrol.superviseType  : '暂无'}}</span>
+                                    <span>{{initRepatrol.superviseTypeStr ? initRepatrol.superviseTypeStr  : '暂无'}}</span>
                                 </el-form-item>
                                 <el-form-item label="分管网格:">
                                     <span>{{initRepatrol.deptName ? initRepatrol.deptName  : '暂无'}}</span>
@@ -60,39 +60,60 @@
                     <toggle-form title="风险等级">
                         <div class="alert">等级划分：A级 0-30分，B级 31-45分，C级 45-60分，D级60分以上！学校（含托幼机构）食堂及校园周边餐饮服务提供者，默认D级！</div>
                         <el-table v-loading="loading" element-loading-text="数据正在努力加载中" :border="true" :resizable="true"
-                            :data="tableData" class="table-div">
-                            <el-table-column show-overflow-tooltip prop="name" min-width="120" label="静态得分">
+                            :data="tableList" class="table-div">
+                            <el-table-column type="index" label="序号" width="50"></el-table-column>
+                            <el-table-column show-overflow-tooltip min-width="120" label="静态得分">
+                                <template slot-scope="scope">
+                                    {{scope.row.staticScore?scope.row.staticScore:'暂无'}}
+                                </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip prop="name" min-width="200" label="动态得分">
+                            <el-table-column show-overflow-tooltip min-width="200" label="动态得分">
+                                <template slot-scope="scope">
+                                    {{scope.row.dynamicScore?scope.row.dynamicScore:'暂无'}}
+                                </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip prop="year" min-width="80" label="合计得分">
+                            <el-table-column show-overflow-tooltip min-width="80" label="合计得分">
+                                <template slot-scope="scope">
+                                    {{scope.row.totalScore?scope.row.totalScore:'暂无'}}
+                                </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip prop="name" min-width="120" label="风险等级">
+                            <el-table-column show-overflow-tooltip min-width="120" label="风险等级">
+                                <template slot-scope="scope">
+                                    {{scope.row.riskLevel?scope.row.riskLevel:'暂无'}}
+                                </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip prop="name" min-width="200" label="评定日期">
+                            <el-table-column show-overflow-tooltip min-width="200" label="评定日期">
+                                <template slot-scope="scope">
+                                    {{scope.row.inspectTime?scope.row.inspectTime:'暂无'}}
+                                </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip prop="year" min-width="80" label="调整风险等级">
+                            <el-table-column show-overflow-tooltip min-width="80" label="调整风险等级">
+                                <template slot-scope="scope">
+                                    {{scope.row.adjust?scope.row.adjust:'暂无'}}
+                                </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip prop="year" min-width="80" label="调整原因">
+                            <el-table-column show-overflow-tooltip min-width="80" label="调整原因">
+                                <template slot-scope="scope">
+                                    {{scope.row.adjustReason?scope.row.adjustReason:'暂无'}}
+                                </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip prop="year" min-width="80" label="检查人">
+                            <el-table-column show-overflow-tooltip min-width="80" label="检查人">
+                                <template slot-scope="scope">
+                                    {{scope.row.inspector?scope.row.inspector:'暂无'}}
+                                </template>
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip prop="year" min-width="80" label="审核人">
+                            <el-table-column show-overflow-tooltip min-width="80" label="审核人">
+                                <template slot-scope="scope">
+                                    {{scope.row.reviewer?scope.row.reviewer:'暂无'}}
+                                </template>
                             </el-table-column>
                             <el-table-column label="操作" min-width="150" fixed="right">
-                                <template slot-scope="scope">
-                                    <a href="javascript:;" class="operate-a" @click="info()">静态记录</a>
-                                    <a href="javascript:;" class="operate-a" @click="info()">动态记录</a>
+                                <template>
+                                    <a href="javascript:;" class="operate-a" @click="info('static')">静态记录</a>
+                                    <a href="javascript:;" class="operate-a" @click="info('dynamic')">动态记录</a>
                                 </template>
                             </el-table-column>
                         </el-table>
-                        <div class="pagination-box">
-                            <el-pagination background @size-change="pageSizeChange" @current-change="pagecCurrentChange"
-                                :current-page="queryLimit.pageNum" :page-sizes="[10, 20, 30, 40,50]"
-                                :page-size="queryLimit.pageSize" layout="total, sizes, prev, pager, next, jumper"
-                                :total="total">
-                            </el-pagination>
-                        </div>
                     </toggle-form>
                 </el-form>
             </div>
@@ -127,54 +148,32 @@
                     }
                     this.initRepatrol = r.data;
                 })
+                api.subRecordList(this.id).then(r => {
+                    this.loading = false;
+                    if (!r.status) {
+                        this.$message.error('数据拉取失败!');
+                    }
+                    let data=[r.data];
+
+                    this.tableList= data;
+                })
+
             },
-            info(row) {
+            info(path) {
                 this.$router.push({
-                    name: "restaurantRating.dynamic.ratingsDetail",
+                    name: "restaurantRating." + path + ".ratingsRecord",
                     query: {
-                        // type: t,
-                        // id: row ? row.id : '',
-                        // status: row ? row.startStatus : '',
+                        id: this.id
                     }
                 });
             },
-            searchPage() {
-                this.loading = true;
-                // api.assessPlanList(this.queryLimit).then(result => {
-                //     if (result.status) {
-                //         this.tableData = result.data.list;
-                //         this.total = result.data.total;
-                //     } else {
-                //         this.$message.warning("列表数据获取失败！请稍候重试");
-                //     }
-                //     this.loading = false;
-                // });
-            },
-            changeSearch() {
-                this.queryLimit.pageNum = 1;
-                this.searchPage();
-            },
-            pagecCurrentChange(num) {
-                this.queryLimit.pageNum = num;
-                this.searchPage();
-            },
-            pageSizeChange(size) {
-                this.queryLimit.pageSize = size;
-                this.changeSearch();
-            },
+
         },
         data() {
             return {
-                tableData: [{
-                    name: 'jjhhhhh'
-                }],
-                total: 0,
-                queryLimit: {
-                    pageNum: 1,
-                    pageSize: 10
-                },
-                initRepatrol: {},
+                id: '',
                 tableList: [],
+                initRepatrol: {},
                 loading: false,
             };
         }
