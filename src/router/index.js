@@ -12,7 +12,7 @@ Router.prototype.push = function push(location) {
    return originalPush.call(this, location).catch(err => err)
 }
 const router = new Router({
-  // mode: 'history', //后端支持可开
+  mode: 'history', //后端支持可开
   routes: routerMap,
   scrollBehavior(to, from, savedPosition) {
     return { x: 0, y: 0 }
