@@ -78,3 +78,10 @@ export function projectBaseData(id) {
       url: `/food/djpd/table/baseInfo?tableId=${id}`,
   })
 }
+export function recordDynamic(data) {
+  return http({
+      method: 'get',
+      url: `/food/djpd/record/dynamic/list`,
+      params:data
+  })
+}

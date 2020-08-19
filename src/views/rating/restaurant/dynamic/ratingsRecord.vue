@@ -10,65 +10,65 @@
                 <el-form label-width="140px" class="demo-ruleForm">
                     <!-- 基本信息 -->
                     <toggle-form title="基本信息">
-                        <div class="content">
-                            <div class="row">
+                        <div class="content ">
+                            <div class="row rowDjpd">
                                 <el-form-item label="主体名称:">
-                                    <span>{{initRepatrol.entityName ? initRepatrol.entityName  : '暂无'}}</span>
+                                    <span>{{baseInfo.entityName ? baseInfo.entityName  : '暂无'}}</span>
                                 </el-form-item>
                             </div>
-                            <div class="row">
+                            <div class="row rowDjpd">
                                 <el-form-item label="地址:">
-                                    <span>{{initRepatrol.entityName ? initRepatrol.entityName  : '暂无'}}</span>
+                                    <span>{{baseInfo.address ? baseInfo.address  : '暂无'}}</span>
                                 </el-form-item>
                             </div>
                             <div class="row">
                                 <el-form-item label="许可备案号:">
-                                    <span> {{initRepatrol.businessType ? initRepatrol.businessType  : '暂无'}}</span>
+                                    <span> {{baseInfo.licNo ? baseInfo.licNo  : '暂无'}}</span>
                                 </el-form-item>
                                 <el-form-item label="社会信用代码:">
-                                    <span>{{initRepatrol.businessNo ? initRepatrol.businessNo  : '暂无'}}</span>
+                                    <span>{{baseInfo.creditCode ? baseInfo.creditCode  : '暂无'}}</span>
                                 </el-form-item>
                             </div>
                             <div class="row">
                                 <el-form-item label="负责人:">
-                                    <span>{{initRepatrol.sourceTime ? initRepatrol.sourceTime  : '暂无'}}</span>
+                                    <span>{{baseInfo.corpName ? baseInfo.corpName  : '暂无'}}</span>
                                 </el-form-item>
                                 <el-form-item label="联系方式:">
-                                    <span>{{initRepatrol.sourceRectifyTime ? initRepatrol.sourceRectifyTime  : '暂无'}}</span>
+                                    <span>{{baseInfo.mobile ? baseInfo.mobile  : '暂无'}}</span>
                                 </el-form-item>
                             </div>
                             <div class="row">
                                 <el-form-item label="主体类型:">
-                                    <span>{{initRepatrol.sourceTime ? initRepatrol.sourceTime  : '暂无'}}</span>
+                                    <span>{{baseInfo.entityTypeStr ? baseInfo.entityTypeStr  : '暂无'}}</span>
                                 </el-form-item>
-                                <el-form-item label="主体业态:">
-                                    <span>{{initRepatrol.sourceRectifyTime ? initRepatrol.sourceRectifyTime  : '暂无'}}</span>
+                                <el-form-item label="主体业态:" v-if="baseInfo.entityType=='RESTAURANT'">
+                                    <span>{{baseInfo.subTypeStr ? baseInfo.subTypeStr  : '暂无'}}</span>
                                 </el-form-item>
                             </div>
                             <div class="row">
-                                <el-form-item label="监管类型:">
-                                    <span>{{initRepatrol.sourceTime ? initRepatrol.sourceTime  : '暂无'}}</span>
+                                <el-form-item label="监管类型:" v-if="baseInfo.entityType=='RESTAURANT'">
+                                    <span>{{baseInfo.superviseTypeStr ? baseInfo.superviseTypeStr  : '暂无'}}</span>
                                 </el-form-item>
                                 <el-form-item label="分管网格:">
-                                    <span>{{initRepatrol.sourceRectifyTime ? initRepatrol.sourceRectifyTime  : '暂无'}}</span>
+                                    <span>{{baseInfo.grid ? baseInfo.grid  : '暂无'}}</span>
                                 </el-form-item>
                             </div>
-
                         </div>
                     </toggle-form>
 
                     <toggle-form title="评分记录">
                         <el-table v-loading="loading" element-loading-text="数据正在努力加载中" :border="true" :resizable="true"
                             :data="tableData" class="table-div">
-                            <el-table-column show-overflow-tooltip prop="name" min-width="120" label="动态评分分数">
+                            <el-table-column type="index" label="序号" width="50"></el-table-column>
+                            <el-table-column show-overflow-tooltip prop="dynamicScore" min-width="120" label="动态评分分数">
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip prop="name" min-width="200" label="检查人">
+                            <el-table-column show-overflow-tooltip prop="inspector" min-width="200" label="检查人">
                             </el-table-column>
-                            <el-table-column show-overflow-tooltip prop="year" min-width="80" label="评分时间">
+                            <el-table-column show-overflow-tooltip prop="createTime" min-width="80" label="评分时间">
                             </el-table-column>
                             <el-table-column label="操作" min-width="150" fixed="right">
                                 <template slot-scope="scope">
-                                    <a href="javascript:;" class="operate-a" @click="info()">详情</a>
+                                    <a href="javascript:;" class="operate-a" @click="info(scope.row)">详情</a>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -94,86 +94,52 @@
 
 <script>
     import ToggleForm from "components/ToggleForm.vue";
-    import * as api from 'api/xchc/detail';
+    import * as api from "api/rating/restaurantRating";
     export default {
         components: {
             ToggleForm,
         },
         async mounted() {
-            if (this.id) {
-                this.get()
-            }
+            this.queryLimit.entityId = this.$route.query.id;
+
+            this.get()
         },
         methods: {
             get() {
                 this.loading = true;
-                api.alreadyDetail(this.id).then(r => {
+                api.recordInfo({
+                    entityId: this.queryLimit.entityId,
+                    scoreType: 'DYNAMIC'
+                }).then(d => {
                     this.loading = false;
-                    if (!r.status) {
+                    if (!d.status) {
                         this.$message.error('数据拉取失败!');
+                        return
                     }
-                    this.initRepatrol = r.data;
-                    let datas = r.data.projects;
-                    this.tableList = [];
-                    // this.project.contextCount = 0;
-                    // this.project.impor3Count = this.initRepatrol.standard.currentCruxNum;
-                    // this.project.impor2Count = this.initRepatrol.standard.currentImportantNum;
-                    // this.project.impor1Count = this.initRepatrol.standard.currentGeneralNum;
-                    datas.map(item => {
-                        let lis = []
-                        item.contexts.map(item2 => {
-                            // this.project.contextCount += 1;
-                            if (item2.result === 'NO') {
-                                if (item2.contextType === 'CRUX') {
-                                    // this.project.unImpor3Count++;
-                                }
-                                if (item2.contextType === 'IMPORTANT') {
-                                    // this.project.unImpor2Count++;
-                                }
-                                if (item2.contextType === 'GENERAL') {
-                                    // this.project.unImpor1Count++;
-                                }
-                            }
-                            let obj = {
-                                projectsNo: item.no,
-                                name: item.name,
-                                contextNo: item.no + '.' + item2.contextNo,
-                                context: item2.contextName,
-                                importantStr: this.filter(item2.contextType),
-                                important: item2.contextType,
-                                id: item2.id,
-                                result: item2.resultStr,
-                                remark: item2.remark,
-                                files: item2.files,
-                                description: item2.description
-                            }
-                            lis.push(obj)
-                        })
-                        this.tableList.push(lis)
-                    })
+                    this.baseInfo = d.data;
+
                 })
+               this.searchPage()
             },
             info(row) {
                 this.$router.push({
                     name: "restaurantRating.dynamic.ratingsDetail",
                     query: {
-                        // type: t,
-                        // id: row ? row.id : '',
-                        // status: row ? row.startStatus : '',
+                        id:row.id
                     }
                 });
             },
             searchPage() {
                 this.loading = true;
-                // api.assessPlanList(this.queryLimit).then(result => {
-                //     if (result.status) {
-                //         this.tableData = result.data.list;
-                //         this.total = result.data.total;
-                //     } else {
-                //         this.$message.warning("列表数据获取失败！请稍候重试");
-                //     }
-                //     this.loading = false;
-                // });
+                api.recordDynamic(this.queryLimit).then(result => {
+                    if (result.status) {
+                        this.tableData = result.data.list;
+                        this.total = result.data.total;
+                    } else {
+                        this.$message.warning("列表数据获取失败！请稍候重试");
+                    }
+                    this.loading = false;
+                });
             },
             changeSearch() {
                 this.queryLimit.pageNum = 1;
@@ -188,31 +154,18 @@
                 this.changeSearch();
             },
         },
-        props: {
-            id: {
-                type: String,
-                default: ''
-            },
-        },
-        watch: {
-            id(val) {
-                if (val) {
-                    this.get()
-                }
-            }
-        },
+
         data() {
             return {
-                tableData: [{
-                    name: 'jjhhhhh'
-                }],
+                id: '',
+                tableData: [],
                 total: 0,
                 queryLimit: {
+                    entityId:'',
                     pageNum: 1,
                     pageSize: 10
                 },
-                initRepatrol: {},
-                tableList: [],
+                baseInfo: {},
                 loading: false,
             };
         }

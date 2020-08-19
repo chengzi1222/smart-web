@@ -205,7 +205,7 @@
 <script>
     import ToggleForm from "components/ToggleForm.vue";
     import Preview from 'components/togOss/previewImg';
-    import * as api2 from "api/rating/restaurantRating";
+    import * as api from "api/rating/restaurantRating";
     export default {
         components: {
             ToggleForm,
@@ -219,7 +219,7 @@
         methods: {
             get() {
                 this.loading = true;
-                api2.staticDetail(this.id).then(r => {
+                api.staticDetail(this.id).then(r => {
                     this.loading = false;
                     if (!r.status) {
                         this.$message.error('数据拉取失败!');
@@ -289,6 +289,7 @@
         },
         data() {
             return {
+                id:'',
                 filePath: '',
                 PreviewShow: false,
                 PreviewFileList: [],

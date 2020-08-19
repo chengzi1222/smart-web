@@ -71,6 +71,7 @@
             <div class="tabOffTop120">
                 <el-table v-loading="loading" element-loading-text="数据正在努力加载中" :border="true" :resizable="true"
                     :data="tableData" class="table-div">
+                    <el-table-column type="index" label="序号" width="50"></el-table-column>
                     <el-table-column show-overflow-tooltip prop="entityName" min-width="150" label="主体名称">
                     </el-table-column>
                     <el-table-column show-overflow-tooltip prop="areaName" min-width="150" label="所属区域">
