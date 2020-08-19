@@ -1,0 +1,57 @@
+/* ie10以下提示出现，页面样式往下挤 */
+.userAgentIE10 .app-wrapper,
+.userAgentIE10 .login-container{
+  margin-top: 30px;
+}
+.userAgentIE10 .app-header{
+	top: 30px !important;
+}
+.userAgentIE10 .app-main{
+	top: 80px !important;
+}
+/* ie浏览器样式调整 */
+.userAgent{
+  text-align: center;
+  position: fixed;
+  z-index: 999;
+  color: red;
+  background: darksalmon;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  top: 0;
+}
+.userAgent a{
+  text-decoration: underline;
+}
+.userAgentBox .app-container{
+  position: relative;
+  z-index: -2;
+}
+/* ie下，筛选条件布局修改 */
+.userAgentBox .ipt-btn-box{
+	display: block !important;
+	overflow: hidden;
+}
+.userAgentBox .ipt-btn-box>div{
+	float: left;
+}
+/* ie下，tab切换 */
+.userAgentBox .tab-box{
+	display: block !important;
+	overflow: hidden;
+}
+.userAgentBox .tab-box>li{
+	float: left;
+}
+.userAgentBox .tab-box>li:last-child{
+	float: none;
+}
+/* ie弹出框修改为固定定位 */
+.userAgentBox .popup-box{
+	position: fixed !important;
+}
+/* ie主题地图主体搜索区域无背景色修改 */
+.userAgentBox .search-box .body{
+	flex: none !important;
+}

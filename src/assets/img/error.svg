@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="110px" height="110px" viewBox="0 0 110 110" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.1 (57501) - http://www.bohemiancoding.com/sketch -->
+    <title>pic22</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="55" cy="55" r="55"></circle>
+        <ellipse id="path-3" cx="53.0689655" cy="21.9264706" rx="22.0344828" ry="21.9264706"></ellipse>
+        <filter x="-6.8%" y="-6.8%" width="113.6%" height="113.7%" filterUnits="objectBoundingBox" id="filter-4">
+            <feOffset dx="-6" dy="0" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.882352941   0 0 0 0 0.905882353   0 0 0 0 0.937254902  0 0 0 1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <ellipse id="path-5" cx="52.7586207" cy="28.4117647" rx="37.2413793" ry="15.4411765"></ellipse>
+        <filter x="-2.7%" y="-6.5%" width="105.4%" height="113.0%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="0" dy="4" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="76.9439225%" y1="8.14672352%" x2="50%" y2="100%" id="linearGradient-7">
+            <stop stop-color="#FFFFFF" stop-opacity="0.795063406" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <circle id="path-8" cx="24" cy="178" r="95"></circle>
+        <filter x="-1.1%" y="-1.1%" width="102.1%" height="102.1%" filterUnits="objectBoundingBox" id="filter-9">
+            <feOffset dx="-4" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.662745098   0 0 0 0 0.709803922   0 0 0 0 0.760784314  0 0 0 1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Default-Page" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="404页面" transform="translate(-133.000000, -185.000000)">
+            <g id="pic22" transform="translate(133.000000, 185.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#FFFFFF" xlink:href="#path-1"></use>
+                <g id="UFO" mask="url(#mask-2)">
+                    <g transform="translate(44.054662, 71.357963) rotate(-345.000000) translate(-44.054662, -71.357963) translate(-0.945338, 18.857963)">
+                        <g id="Oval-8" stroke="none" fill="none">
+                            <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
+                            <use fill="black" fill-opacity="1" filter="url(#filter-4)" xlink:href="#path-3"></use>
+                            <ellipse stroke="#A9B5C2" stroke-width="2" stroke-linejoin="square" cx="53.0689655" cy="21.9264706" rx="21.0344828" ry="20.9264706"></ellipse>
+                        </g>
+                        <g id="Oval-7" stroke="none" fill="none">
+                            <use fill="#E1E7EF" fill-rule="evenodd" xlink:href="#path-5"></use>
+                            <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                            <ellipse stroke="#A9B5C2" stroke-width="2" stroke-linejoin="square" cx="52.7586207" cy="28.4117647" rx="36.2413793" ry="14.4411765"></ellipse>
+                        </g>
+                        <ellipse id="Oval-7" stroke="none" fill="#FFFFFF" fill-rule="evenodd" cx="52.7586207" cy="28.4117647" rx="16.137931" ry="6.79411765"></ellipse>
+                        <ellipse id="Oval-9" stroke="none" fill="#E1E7EF" fill-rule="evenodd" cx="47.1724138" cy="5.55882353" rx="1.24137931" ry="1.23529412"></ellipse>
+                        <path d="M44.0689655,7.41176471 C42.8275862,8.02941176 41.5862069,9.26470588 40.3448276,11.1176471" id="Path-4" stroke="#E1E7EF" stroke-width="1.86206897" fill="none" stroke-linecap="round"></path>
+                        <path d="M45.7927069,27.8266135 L7.93063791,70.135437 C14.7582241,82.6942605 24.0685689,90.7236723 35.8616724,94.2236723 C47.6547758,97.7236723 60.4823621,97.7236723 74.344431,94.2236723 L76.7914054,36.6142985 L45.7927069,27.8266135 Z" id="Path-5" stroke="none" fill="url(#linearGradient-7)" fill-rule="evenodd" transform="translate(42.361022, 62.337643) rotate(-15.000000) translate(-42.361022, -62.337643) "></path>
+                    </g>
+                </g>
+                <g id="Oval-2" mask="url(#mask-2)">
+                    <use fill="#D8E0EA" fill-rule="evenodd" xlink:href="#path-8"></use>
+                    <use fill="black" fill-opacity="1" filter="url(#filter-9)" xlink:href="#path-8"></use>
+                </g>
+                <path d="M56,76 L56,74 C56,73.4477153 56.4477153,73 57,73 C57.5522847,73 58,73.4477153 58,74 L58,76 L60,76 C60.5522847,76 61,76.4477153 61,77 C61,77.5522847 60.5522847,78 60,78 L58,78 L58,80 C58,80.5522847 57.5522847,81 57,81 C56.4477153,81 56,80.5522847 56,80 L56,78 L54,78 C53.4477153,78 53,77.5522847 53,77 C53,76.4477153 53.4477153,76 54,76 L56,76 Z" id="Combined-Shape-Copy" fill="#D7DEE8" mask="url(#mask-2)"></path>
+                <circle id="Oval-3" fill="#D7DEE8" mask="url(#mask-2)" cx="23" cy="74" r="1"></circle>
+                <circle id="Oval-4" stroke="#D7DEE8" mask="url(#mask-2)" cx="37" cy="66" r="2"></circle>
+                <circle id="Oval-3-Copy" fill="#D7DEE8" mask="url(#mask-2)" cx="40.5" cy="78.5" r="1.5"></circle>
+                <circle id="Oval-3-Copy-2" fill="#D7DEE8" mask="url(#mask-2)" cx="67.5" cy="86.5" r="1.5"></circle>
+                <ellipse id="Oval-5" fill="#FFFFFF" mask="url(#mask-2)" transform="translate(45.109349, 95.098941) rotate(-345.000000) translate(-45.109349, -95.098941) " cx="45.109349" cy="95.0989414" rx="12.5" ry="4"></ellipse>
+            </g>
+        </g>
+    </g>
+</svg>

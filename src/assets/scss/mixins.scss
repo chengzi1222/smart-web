@@ -1,0 +1,12 @@
+
+// head部分的激活的状态
+@mixin head_active{
+    background: $head_active_bgcolor;
+    border-bottom: 3px solid $head_active_bdcolor;
+    color: $head_active_color;
+}
+
+//侧边激活的状态
+@mixin side_active{
+    color: $side_active_color;
+}
