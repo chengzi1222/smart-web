@@ -85,3 +85,9 @@ export function recordDynamic(data) {
       params:data
   })
 }
+export function dynamicDetail(id) {
+  return http({
+      method: 'get',
+      url: `/food/djpd/record/dynamic/detail?recordId=${id}`,
+  })
+}
