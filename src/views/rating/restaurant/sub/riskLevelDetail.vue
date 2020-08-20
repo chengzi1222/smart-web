@@ -108,9 +108,9 @@
                                 </template>
                             </el-table-column>
                             <el-table-column label="操作" min-width="150" fixed="right">
-                                <template>
-                                    <a href="javascript:;" class="operate-a" @click="info('static')">静态记录</a>
-                                    <a href="javascript:;" class="operate-a" @click="info('dynamic')">动态记录</a>
+                                <template  slot-scope="scope">
+                                    <a href="javascript:;" v-if='scope.row.staticScore' class="operate-a" @click="info('static')">静态记录</a>
+                                    <a href="javascript:;" v-if='scope.row.dynamicScore' class="operate-a" @click="info('dynamic')">动态记录</a>
                                 </template>
                             </el-table-column>
                         </el-table>
