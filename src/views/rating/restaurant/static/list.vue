@@ -121,7 +121,8 @@
                         <template slot-scope="scope">
                             <a href="javascript:;" class="operate-a"
                                 @click="go(scope.row,'restaurantRating.static.ratings')">{{scope.row.score?'重新评分':'评分'}}</a>
-                            <a href="javascript:;" class="operate-a" v-if='scope.row.score' @click="go(scope.row,'restaurantRating.static.ratingsRecord')">评分记录</a>
+                            <a href="javascript:;" class="operate-a" v-if='scope.row.score'
+                                @click="go(scope.row,'restaurantRating.static.ratingsRecord')">评分记录</a>
                             <a href="javascript:;" class="operate-a" @click="sub(scope.row)">主体档案</a>
                         </template>
                     </el-table-column>
@@ -273,16 +274,21 @@
                 }
                 this.changeSearch();
             },
-            go(row,url) {
+            go(row, url) {
                 this.$router.push({
-                    name:url ,
+                    name: url,
                     query: {
                         id: row.id,
                     }
                 });
             },
             sub(row) {
-
+                this.$router.push({
+                    path: '/subject/restaurant/archives/detail',
+                    query: {
+                        id: row.id,
+                    }
+                });
             },
             searchPage() {
                 this.loading = true;

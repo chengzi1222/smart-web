@@ -72,21 +72,24 @@
                 <el-table v-loading="loading" element-loading-text="数据正在努力加载中" :border="true" :resizable="true"
                     :data="tableData" class="table-div">
                     <el-table-column type="index" label="序号" width="50"></el-table-column>
-                    <el-table-column show-overflow-tooltip prop="entityName" min-width="150" label="主体名称"></el-table-column>
-                    <el-table-column show-overflow-tooltip prop="areaName" min-width="150" label="所属区域"></el-table-column>
+                    <el-table-column show-overflow-tooltip prop="entityName" min-width="150" label="主体名称">
+                    </el-table-column>
+                    <el-table-column show-overflow-tooltip prop="areaName" min-width="150" label="所属区域">
+                    </el-table-column>
                     <el-table-column show-overflow-tooltip min-width="120" label="社会信用代码">
-                         <template slot-scope="scope">
+                        <template slot-scope="scope">
                             {{scope.row.creditCode?scope.row.creditCode:'-'}}
                         </template>
                     </el-table-column>
-                    <el-table-column show-overflow-tooltip min-width="100" prop="entityTypeStr"  label="主体类型"></el-table-column>
-                    <el-table-column show-overflow-tooltip min-width="100"  label="主体业态">
+                    <el-table-column show-overflow-tooltip min-width="100" prop="entityTypeStr" label="主体类型">
+                    </el-table-column>
+                    <el-table-column show-overflow-tooltip min-width="100" label="主体业态">
                         <template slot-scope="scope">
                             {{scope.row.subTypeStr?scope.row.subTypeStr:'-'}}
                         </template>
                     </el-table-column>
                     <el-table-column show-overflow-tooltip min-width="100" label="监管类型">
-                         <template slot-scope="scope">
+                        <template slot-scope="scope">
                             {{scope.row.superviseTypeStr?scope.row.superviseTypeStr:'-'}}
                         </template>
                     </el-table-column>
@@ -105,10 +108,12 @@
                             {{scope.row.latestInspectTime?scope.row.latestInspectTime:'-'}}
                         </template>
                     </el-table-column>
-                    <el-table-column show-overflow-tooltip prop="handleTypeStr" min-width="80" label="主体类别"></el-table-column>
+                    <el-table-column show-overflow-tooltip prop="handleTypeStr" min-width="80" label="主体类别">
+                    </el-table-column>
                     <el-table-column show-overflow-tooltip min-width="60" label="评分状态">
                         <template slot-scope="scope">
-                          <span :style="scope.row.scoreStatus=='EXPIRED'?'color:#FA503B':''">{{scope.row.scoreStatusStr}}</span>
+                            <span
+                                :style="scope.row.scoreStatus=='EXPIRED'?'color:#FA503B':''">{{scope.row.scoreStatusStr}}</span>
                         </template>
                     </el-table-column>
                     <el-table-column show-overflow-tooltip prop="statusStr" min-width="50" label="状态"></el-table-column>
@@ -116,7 +121,8 @@
                         <template slot-scope="scope">
                             <a href="javascript:;" class="operate-a"
                                 @click="go(scope.row,'restaurantRating.dynamic.ratings')">{{scope.row.score?'重新评分':'评分'}}</a>
-                            <a href="javascript:;" class="operate-a" v-if='scope.row.score' @click="go(scope.row,'restaurantRating.dynamic.ratingsRecord')">评分记录</a>
+                            <a href="javascript:;" class="operate-a" v-if='scope.row.score'
+                                @click="go(scope.row,'restaurantRating.dynamic.ratingsRecord')">评分记录</a>
                             <a href="javascript:;" class="operate-a" @click="sub(scope.row)">主体档案</a>
                         </template>
                     </el-table-column>
@@ -268,17 +274,22 @@
                 }
                 this.changeSearch();
             },
-         
-            go(row,url) {
+
+            go(row, url) {
                 this.$router.push({
-                    name:url ,
+                    name: url,
                     query: {
                         id: row.id,
                     }
                 });
             },
             sub(row) {
-
+                this.$router.push({
+                    path: '/subject/restaurant/archives/detail',
+                    query: {
+                        id: row.id,
+                    }
+                });
             },
             searchPage() {
                 this.loading = true;

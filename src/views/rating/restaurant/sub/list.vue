@@ -154,7 +154,7 @@
           <template slot-scope="scope">
             <a href="javascript:;" class="operate-a" @click="adjustData(scope.row)">调整等级</a>
             <a href="javascript:;" class="operate-a" @click="goRecord(scope.row.id)">评分记录</a>
-            <a href="javascript:;" class="operate-a">主体档案</a>
+            <a href="javascript:;" class="operate-a" @click="sub(scope.row)">主体档案</a>
           </template>
         </el-table-column>
       </el-table>
@@ -297,6 +297,14 @@ export default {
         }
       })
     },
+     sub(row) {
+                this.$router.push({
+                    path: '/subject/restaurant/archives/detail',
+                    query: {
+                        id: row.id,
+                    }
+                });
+            },
     adjustSuccess() {
       this.showTip = false;
       this.searchTab()
