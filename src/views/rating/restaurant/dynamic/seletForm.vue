@@ -47,6 +47,10 @@
         type: Boolean,
         default: true
       },
+      businessType: {
+        type: String,
+        default: 'CFDARESTAURANT'
+      },
     },
     data() {
       return {
@@ -55,7 +59,8 @@
           pageSize: 6,
           name: '',
           status: 'ENABLE',
-          type:'DYNAMIC'
+          type:'DYNAMIC',
+          businessType:''
         },
         selectIndex: null,
         total: 0,
@@ -86,6 +91,7 @@
       },
       async getPageList() {
         this.loading = true
+        this.queryLimit.businessType=this.businessType;
         let result = await api.manageList(this.queryLimit)
         this.tableData = result.data.list
         this.total = result.data.total

@@ -259,8 +259,7 @@
       return {
         inspectorListLoading: false,
         inspectorList: [],
-        baseInfo: {
-        }, //init 数据
+        baseInfo: {}, //init 数据
         tableList: [],
         filePath: "",
         //检查项图片显示相关
@@ -313,7 +312,6 @@
           'MULTIPLE': '多选计分',
           'HIGHEST': '多选最高计分',
         },
-        contextScore: {},
         //sumbit 数据集合
         repatrol: {
           contentFormDto: [],
@@ -351,7 +349,6 @@
             this.project.total += 1;
             item.contentList.map(item2 => {
               this.photoJson[item2.id] = [];
-              this.contextScore[item.id] = 0;
               let obj = {
                 projectsNo: item.no,
                 name: `${item.name}（${item.score}分）`,
@@ -581,34 +578,49 @@
 
         let opt = this.baseInfo.statisticsOptions;
         this.baseInfo.tableInfo.forEach((item, index) => {
-          this.contextScore[item.id] = 0
+          let contextScore = 0
           if (item.rule == 'SINGLE') {
             let flag = false;
             this.tableList[index].forEach(context => {
               if (context.result == opt && flag == false) {
-                this.contextScore[item.id] += context.score / 1;
+                contextScore += context.score / 1;
                 flag = true;
               } else if (context.result == opt && flag == true) {
                 this.$message.error(`检查项[${context.projectsNo}]为${this.contentRule[context.rule]},请注意你的选择！`)
               }
             })
           } else if (item.rule == 'MULTIPLE') {
-            item.forEach(context => {
+            this.tableList[index].forEach(context => {
+
               if (context.result == opt) {
-                this.contextScore[item.id] += context.score / 1;
+                contextScore += context.score / 1;
+
               }
             })
           } else if (item.rule == 'HIGHEST') {
             let arr = []
-            item.forEach(context => {
+            this.tableList[index].forEach(context => {
               if (context.result == opt) {
                 arr.push(context.score / 1)
               }
             })
-            this.contextScore[item.id] += Math.max(...arr)
+            if(arr.length>0){
+              contextScore += this.max(arr)
+            }
           }
-          this.project.score += this.contextScore[item.id] / 1
+          console.log(contextScore)
+          
+          this.project.score += contextScore
         })
+      },
+      max(arr) {
+        var max = arr[0];
+        for (var i = 1; i < arr.length; i++) {
+          if (arr[i] > max) {
+            max = arr[i];
+          }
+        }
+        return max
       },
       //判断数组是否包含字符串
       IsInArray(arr, val) {

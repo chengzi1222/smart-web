@@ -152,15 +152,13 @@
             </div>
             <div class="row bottomContent">
               <el-form-item label="食品安全负责人：" prop="foodSafetyPerson">
-                 <el-input v-model="repatrol.foodSafetyPerson" class="w250"  :maxlength="20"
-                  placeholder="请输入食品安全负责人">
+                <el-input v-model="repatrol.foodSafetyPerson" class="w250" :maxlength="20" placeholder="请输入食品安全负责人">
                 </el-input>
               </el-form-item>
             </div>
             <div class="row bottomContent">
               <el-form-item label="手机号：" prop="foodSafetyPersonTel">
-                <el-input v-model="repatrol.foodSafetyPersonTel" class="w250" :maxlength="11"
-                  placeholder="请输入手机号">
+                <el-input v-model="repatrol.foodSafetyPersonTel" class="w250" :maxlength="11" placeholder="请输入手机号">
                 </el-input>
               </el-form-item>
             </div>
@@ -226,7 +224,8 @@
     </div>
     <Preview v-if='itemPicList.length>0' :key='"itemPicList"' :showImg="PreviewShow" @close="PreviewShow = false"
       :currentIndex='PreviewIndex' :title='PreviewTitle' :imgList="PreviewFileList"></Preview>
-    <Select-form :showTip="showTip" v-if="showTip" @cancel="cancel" @addConfirm="addConfirm"></Select-form>
+    <Select-form :showTip="showTip" :businessType='baseInfo.entityType' v-if="showTip" @cancel="cancel"
+      @addConfirm="addConfirm"></Select-form>
   </div>
 </template>
 
@@ -292,7 +291,7 @@
             validator: phoneValid,
             trigger: 'blur'
           }],
-           foodSafetyPerson: {
+          foodSafetyPerson: {
             required: true,
             message: '食品安全负责人',
             trigger: 'change'
@@ -312,7 +311,6 @@
           },
 
         },
-        contextScore: {},
         contentRule: {
           'SINGLE': '单选计分',
           'MULTIPLE': '多选计分',
@@ -333,8 +331,8 @@
           inspector: '',
           inspectorId: '',
           tel: '',
-          foodSafetyPerson:'',
-          foodSafetyPersonTel:'',
+          foodSafetyPerson: '',
+          foodSafetyPersonTel: '',
           refuseSignReason: '',
           remarks: "",
           score: "",
@@ -376,7 +374,6 @@
               this.project.total += 1;
               item.contentList.map(item2 => {
                 this.photoJson[item2.id] = [];
-                this.contextScore[item.id] = 0;
                 let obj = {
                   projectsNo: item.no,
                   name: `${item.name}（${item.score}分）`,
@@ -417,10 +414,10 @@
             return false;
           }
         }
-         if (this.tableList.length<=0 ) {
-            this.$message.error('检查项为必填项！！！')
-            return false;
-          }
+        if (this.tableList.length <= 0) {
+          this.$message.error('检查项为必填项！！！')
+          return false;
+        }
         // 
         if (this.repatrol.cooperateSign == 'YES' && this.signId == '') {
           this.$message.error('请添加企业电子签名!')
@@ -611,34 +608,48 @@
 
         let opt = this.tableBaseData.statisticsOptions;
         this.baseInfo.tableInfo.forEach((item, index) => {
-          this.contextScore[item.id] = 0
+          let contextScore = 0
+
           if (item.rule == 'SINGLE') {
             let flag = false;
             this.tableList[index].forEach(context => {
               if (context.result == opt && flag == false) {
-                this.contextScore[item.id] += context.score / 1;
+                contextScore += context.score / 1;
                 flag = true;
               } else if (context.result == opt && flag == true) {
                 this.$message.error(`检查项[${context.projectsNo}]为${this.contentRule[context.rule]},请注意你的选择！`)
               }
             })
           } else if (item.rule == 'MULTIPLE') {
-            item.forEach(context => {
+            this.tableList[index].forEach(context => {
               if (context.result == opt) {
-                this.contextScore[item.id] += context.score / 1;
+                contextScore += context.score / 1;
+
               }
             })
           } else if (item.rule == 'HIGHEST') {
             let arr = []
-            item.forEach(context => {
+            this.tableList[index].forEach(context => {
               if (context.result == opt) {
                 arr.push(context.score / 1)
+
               }
             })
-            this.contextScore[item.id] += Math.max(...arr)
+            if (arr.length > 0) {
+              contextScore += this.max(arr)
+            }
           }
-          this.project.score += this.contextScore[item.id] / 1
+          this.project.score += contextScore / 1
         })
+      },
+      max(arr) {
+        var max = arr[0];
+        for (var i = 1; i < arr.length; i++) {
+          if (arr[i] > max) {
+            max = arr[i];
+          }
+        }
+        return max
       },
       //判断数组是否包含字符串
       IsInArray(arr, val) {
@@ -678,34 +689,34 @@
       },
       //附件图片上传成功
       picSuccess(file, fileList) {
-         if (file.status) {
-        //图片地址
-        let fileId = file.data.id;
-        //图片名称
-        let fileName = file.data.fileName;
-        //图片地址
-        let picSrc = file.data.fileId
-        let id = this.rowId;
-        let array = [];
-        let json = {};
-        if (!this.photoJson[id]) {
-          json["id"] = fileId;
-          json["fileName"] = fileName;
-          json["picSrc"] = picSrc;
-          json["contextId"] = id;
-          array.push(json);
-          this.photoJson[id] = array;
-        } else {
-          json["id"] = fileId;
-          json["fileName"] = fileName;
-          json["picSrc"] = picSrc;
-          json["contextId"] = id;
-          array = this.photoJson[id];
-          array.push(json)
-          this.photoJson[id] = array;
-        }
-        this.$set(this.row_, 'isShowFile', true);
-         this.$message.success('图片上传成功！');
+        if (file.status) {
+          //图片地址
+          let fileId = file.data.id;
+          //图片名称
+          let fileName = file.data.fileName;
+          //图片地址
+          let picSrc = file.data.fileId
+          let id = this.rowId;
+          let array = [];
+          let json = {};
+          if (!this.photoJson[id]) {
+            json["id"] = fileId;
+            json["fileName"] = fileName;
+            json["picSrc"] = picSrc;
+            json["contextId"] = id;
+            array.push(json);
+            this.photoJson[id] = array;
+          } else {
+            json["id"] = fileId;
+            json["fileName"] = fileName;
+            json["picSrc"] = picSrc;
+            json["contextId"] = id;
+            array = this.photoJson[id];
+            array.push(json)
+            this.photoJson[id] = array;
+          }
+          this.$set(this.row_, 'isShowFile', true);
+          this.$message.success('图片上传成功！');
         } else {
           this.$message.error('图片上传失败！');
         }
