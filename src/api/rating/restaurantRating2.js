@@ -100,3 +100,11 @@ export function getFoodDjpdUpdate(data) {
       data:data
     });
   }
+    //主体列表导出
+    export function exportList(params) {
+      return http({
+        method: 'get',
+        url: '/food/djpd/entity/list/export',
+        params
+      });
+    }
