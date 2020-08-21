@@ -121,7 +121,7 @@ export default {
       this.today = today
     },
     disabledDate(time) {
-      let _minTime = new Date(this.today).getTime()
+      let _minTime = new Date(this.today).setTime(new Date(this.today).getTime()+24*60*60*1000)
       let _maxTime = this.getNextYear(this.today)
       if (_minTime && _maxTime) {
         return time.getTime() < _minTime || time.getTime() > _maxTime
