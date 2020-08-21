@@ -80,18 +80,17 @@ export function getFoodDjpdUpdate(data) {
   }
 
   //获取审核人列表
-  export function inspectorList() {
+  export function inspectorList(inspectorName) {
     return http({
         method: 'get',
-        url: `/xchc/patrol/inspectorList`,
+        url: `/food/djpd/entity/inspectorList`,
         params: {
-            inspectorName:'',
+            inspectorName:inspectorName,
             pageNum:1,
             pageSize:10
         }
     })
   }
-
   //调整风险等级
   export function addjustLevel(data) {
     return http({

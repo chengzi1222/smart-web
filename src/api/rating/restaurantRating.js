@@ -45,7 +45,7 @@ export function commit(params) {
 export function inspectorList(inspectorName) {
   return http({
       method: 'get',
-      url: `/xchc/patrol/inspectorList`,
+      url: `/food/djpd/entity/inspectorList`,
       params: {
           inspectorName:inspectorName,
           pageNum:1,
