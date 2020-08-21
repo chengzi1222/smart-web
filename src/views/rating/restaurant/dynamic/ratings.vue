@@ -225,7 +225,7 @@
     <Preview v-if='itemPicList.length>0' :key='"itemPicList"' :showImg="PreviewShow" @close="PreviewShow = false"
       :currentIndex='PreviewIndex' :title='PreviewTitle' :imgList="PreviewFileList"></Preview>
     <Select-form :showTip="showTip" :businessType='baseInfo.entityType' v-if="showTip" @cancel="cancel"
-      @addConfirm="addConfirm"></Select-form>
+      @addConfirm="addConfirm" :entityId='repatrol.entityId'></Select-form>
   </div>
 </template>
 

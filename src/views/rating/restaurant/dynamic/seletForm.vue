@@ -51,6 +51,10 @@
         type: String,
         default: 'CFDARESTAURANT'
       },
+      entityId :{
+        type: String,
+        default: ''
+      },
     },
     data() {
       return {
@@ -60,14 +64,15 @@
           name: '',
           status: 'ENABLE',
           type:'DYNAMIC',
-          businessType:''
+          businessType:'',
+          entityId:''
         },
         selectIndex: null,
         total: 0,
         tableData: [],
         id: '',
         name: '',
-        loading: false
+        loading: false,
       }
     },
     methods: {
@@ -92,6 +97,7 @@
       async getPageList() {
         this.loading = true
         this.queryLimit.businessType=this.businessType;
+        this.queryLimit.entityId=this.entityId;
         let result = await api.manageList(this.queryLimit)
         this.tableData = result.data.list
         this.total = result.data.total
