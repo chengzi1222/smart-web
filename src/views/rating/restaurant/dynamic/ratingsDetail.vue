@@ -28,7 +28,7 @@
                                 </el-table-column>
                                 <el-table-column show-overflow-tooltip label="备注" min-width="120">
                                     <template slot-scope="scope">
-                                        {{scope.row.remarks?scope.row.remarks:'暂无'}}
+                                        {{scope.row.remark?scope.row.remark:'暂无'}}
                                     </template>
                                 </el-table-column>
                                 <el-table-column show-overflow-tooltip label="附件" min-width="120">
